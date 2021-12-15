@@ -173,4 +173,13 @@ public class Collection {
             return null;
         }
     }
+    
+     /**
+     * Deletes a document or a collection.
+     * @param name The name of the doc or collection
+     * @return true if delete succeed, false otherwise
+     */
+    public boolean delete(String name){
+        return new File(root,name).delete();
+    }
 }
