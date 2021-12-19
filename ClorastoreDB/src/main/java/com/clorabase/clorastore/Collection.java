@@ -61,8 +61,7 @@ public class Collection {
     }
 
     /**
-     * Creates field in the document. Updates if already exist.
-     *
+     * Creates field creating the document if not exist. Updates if already exist.
      * @param document The name of the document
      * @param name     The name of the field
      * @param value    The value of the field
@@ -99,14 +98,12 @@ public class Collection {
     }
 
     /**
-     * Goes into the specified collection.
-     *
+     * Goes into the specified collection or creates if does not exist.
      * @param name Name of the collection
      * @return That new collection
      * @throws ClorastoreException If collection cannot be created for some reason.
      */
-    public @NonNull
-    Collection collection(String name) {
+    public @NonNull Collection collection(String name) {
         File file = new File(root, name);
         if (!file.isDirectory() && !file.mkdir())
             throw new ClorastoreException("Unknown error occured while creating document.", Reasons.ERROR_UNKNOWN);
@@ -118,8 +115,7 @@ public class Collection {
      *
      * @return {@link Collection}. A list of collections. May be empty, but never null.
      */
-    public @NonNull
-    List<Collection> getCollections() {
+    public @NonNull List<Collection> getCollections() {
         List<Collection> collections = new ArrayList<>();
         String[] files = root.list(FileFilterUtils.directoryFileFilter());
         if (files != null) {
@@ -130,16 +126,20 @@ public class Collection {
     }
 
     /**
-     * Returns document present in the current collection.
+     * Returns document names present in the current collection.
      *
-     * @return {@link Collection}. May be empty, but never null
+     * @return {@link List<String>}. May be empty, but never null
      */
     public List<String> getDocuments() {
         String[] files = root.list(FileFilterUtils.suffixFileFilter(".doc"));
         if (files == null)
             return new ArrayList<>();
-        else
+        else {
+            for (int i = 0; i < files.length; i++) {
+                files[i] = files[i].replace(".doc","");
+            }
             return Arrays.asList(files);
+        }
     }
 
     /**
@@ -157,8 +157,7 @@ public class Collection {
      * @param name The name of the document.
      * @return If succeed,Map containing fields name as String and values as object, otherwise null.
      */
-    public @Nullable
-    Map<String, Object> getDocumentFields(String name) {
+    public @Nullable Map<String, Object> getDocumentFields(String name) {
         try {
             Map<String, Object> map = new HashMap<>();
             JSONObject json = new JSONObject(FileUtils.readFileToString(new File(root, name + ".doc"), Charset.defaultCharset()));
@@ -173,8 +172,8 @@ public class Collection {
             return null;
         }
     }
-    
-     /**
+
+    /**
      * Deletes a document or a collection.
      * @param name The name of the doc or collection
      * @return true if delete succeed, false otherwise
@@ -182,4 +181,5 @@ public class Collection {
     public boolean delete(String name){
         return new File(root,name).delete();
     }
+    
 }
