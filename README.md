@@ -102,11 +102,20 @@ Clorastore.getInstance(this,"demoDB").delete();
 Deletes the whole database.
 
 
+#### Itration
+- Returns the list of collections present in the current collection.
 ```java
 List<Collection> collections = collection.getCollections();
 ```
 
-Returns the list of collections present in the current collection.
+- Returns the list of document names, present in this collection.
+```java
+List<String> list = collection.getDocuments();
+for (String doc : list){
+    Map<String,Object> map = collection.getDocumentFields(doc);
+    // Iterate through each map.
+}
+```
 
 
 ***Note** : Please refer to [javadocs](https://errorxcode.github.io/docs/clorastore/index.html) for detailed information of each method*
