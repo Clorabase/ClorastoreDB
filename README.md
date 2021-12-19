@@ -36,7 +36,7 @@
 In your app build.gradle
 ```groovy
 dependencies {
-	        implementation 'com.github.ErrorxCode:ClorastoreDB:1.0.0'
+	        implementation 'com.github.ErrorxCode:ClorastoreDB:1.2'
 	}
 ```
 
