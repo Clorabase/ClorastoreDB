@@ -17,7 +17,7 @@
 
   
 ## Acknowledgements
- - [What is No-Sql](https://en.wikipedia.org/wiki/NoSQL)
+ - [What is No-Sql](https://en.wikipedia.org/wiki/Document-oriented_database)
 	
 ## Documentation
 - [Javadocs](https://errorxcode.github.io/docs/clorastore/index.html)
