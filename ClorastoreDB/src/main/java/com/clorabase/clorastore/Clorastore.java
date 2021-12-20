@@ -8,9 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Clorastore is the first android free and open-source NOSQL database written in java. This is similar to Mongo DB and Firestore, except the fact
- * that in this database, collections can contain a sub collection while document can't.
- * This is the top-level class of the whole database. You can configure your database behaviour from here.
+ * This is the top-level class of the whole database. Every database operation or any configuration change in it is performed using this class. You can configure your database behaviour from here.
  * The database is located in the path returned by {@link Context#getDataDir()}.
  *
  * @author Rahil khan
@@ -34,7 +32,7 @@ public class  Clorastore {
             instance = new Clorastore();
 
         root = new File(context.getDataDir(),name);
-        if (!root.exists() && root.mkdir())
+        if (!root.exists() && !root.mkdir())
             throw new ClorastoreException("There was an error while creating the database.",Reasons.ERROR_CREATING_DATABASE);
 
         return instance;
