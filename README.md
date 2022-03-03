@@ -14,10 +14,11 @@
 - Easy,lightweight and fast
 - Capable of storing almost all datatype
 - Use document and collections to store data
+- High level querying engine
 
   
 ## Acknowledgements
- - [What is No-Sql](https://en.wikipedia.org/wiki/Document-oriented_database)
+ - [Document oriented database](https://en.wikipedia.org/wiki/Document-oriented_database)
 	
 ## Documentation
 - [Javadocs](https://errorxcode.github.io/docs/clorastore/index.html)
@@ -40,7 +41,14 @@ dependencies {
 	}
 ```
 
- ---> **Readme is incomplete.**
+## It's easy
+```java
+Clorastore.insert().and().read().finish();
+```
 
-#### That's all.
-Yeah. This is this much hard, this much easy or whatever you want to say. There is also another great database known as [CloremDB](https://github.com/ErrorxCode/CloremDB). It is also a NoSQL database but it's of key-value type. The data is stored in the form of JSON tree. The only downside of this database is that this doesn't support "Arrays" or "List", and also this require minSdk to be > 26. So if your minSdk is > 26 & you don't want to store array or list in database then use [Clorastore](https://github.com/ErrorxCode/ClorastoreDB) , otherwise use [CloremDB](https://github.com/ErrorxCode/CloremDB)
+## Contribution
+Contribution are always welcome. Rules and `code of conduct` are same. Please make a issue or pull request regarding any feature or bug.
+
+### Sponsored by ❤
+#### [Clorabase](https://clorabase.netlify.app)
+> A account-less platform as a service for android apps. (PaaS)
