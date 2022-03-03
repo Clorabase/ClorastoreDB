@@ -22,6 +22,7 @@
 	
 ## Documentation
 - [Javadocs](https://errorxcode.github.io/docs/clorastore/index.html)
+- [Guide](https://github.com/ErrorxCode/ClorastoreDB/wiki/Documentation)
 
   
 ## Deployment / Installation
