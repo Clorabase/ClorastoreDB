@@ -8,14 +8,16 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * This is the top-level class of the whole database. Every database operation or any configuration change in it is performed using this class. You can configure your database behaviour from here.
+ * This is the top-level class of the whole database. Every database operation
+ * or any configuration change in it is performed using this class.
+ * You can configure your database behaviour from here.
  * The database is located in the path returned by {@link Context#getDataDir()}.
  *
  * @author Rahil khan
  * @since 2021
  * @see <a href="https://github.com/ErrorxCode/ClorastoreDB">Github</a> for more info.
  */
-public class  Clorastore {
+public class Clorastore {
     private static Clorastore instance;
     private static File root;
 
@@ -63,8 +65,8 @@ public class  Clorastore {
 
 
     /**
-     * Deletes the current database of which instance is.
-     * @return true if succeed, false otherwise (IOException occured)
+     * Deletes the current database.
+     * @return true if succeed, false otherwise (IOException occurred)
      */
     public boolean delete(){
         try {
@@ -79,7 +81,7 @@ public class  Clorastore {
     /**
      * Cleans the database root without deleting it. The database will be still there after cleaning it.
      * This will just delete all the collection in its root.
-     * @return true if succeed, false otherwise (IOException occured)
+     * @return true if succeed, false otherwise (IOException occurred)
      */
     public boolean clean(){
         try {

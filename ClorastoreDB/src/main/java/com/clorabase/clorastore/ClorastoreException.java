@@ -1,5 +1,8 @@
 package com.clorabase.clorastore;
 
+/**
+ * An exception which is thrown when any database operation get failed.
+ */
 public class ClorastoreException extends RuntimeException {
     private Reasons reasons;
 
