@@ -56,6 +56,6 @@ Clorastore.insert().and().read().finish();
 ## Contribution
 Contribution are always welcome. Rules and `code of conduct` are same. Please make a issue or pull request regarding any feature or bug.
 
-### Sponsored by ❤
+## Powered by ❤
 #### [Clorabase](https://clorabase.netlify.app)
 > A account-less platform as a service for android apps. (PaaS)
