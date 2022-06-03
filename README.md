@@ -1,5 +1,5 @@
 
-# Clorastore ~ Firestore as local database
+# Clorastore ~ MongoDB/Firestore alternative
 <p align="left">
   <a href="#"><img alt="Version" src="https://img.shields.io/badge/Language-Java-1DA1F2?style=flat-square&logo=java"></a>
   <a href="#"><img alt="Bot" src="https://img.shields.io/badge/Version-2.0-green"></a>
