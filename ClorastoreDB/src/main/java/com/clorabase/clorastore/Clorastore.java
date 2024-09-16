@@ -1,7 +1,5 @@
 package com.clorabase.clorastore;
 
-import android.content.Context;
-
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -25,15 +23,15 @@ public class Clorastore {
 
     /**
      * Returns the singleton instance of the class.
-     * @param context The context of the application or activity.
+     * @param dir The directory of your database
      * @return instance of the class.
      * @throws ClorastoreException - if database was not created successfully.
      */
-    public static Clorastore getInstance(Context context,String name){
+    public static Clorastore getInstance(File dir,String name){
         if (instance == null)
             instance = new Clorastore();
 
-        root = new File(context.getDataDir(),name);
+        root = new File(dir,name);
         if (!root.exists() && !root.mkdir())
             throw new ClorastoreException("There was an error while creating the database.",Reasons.ERROR_CREATING_DATABASE);
 
