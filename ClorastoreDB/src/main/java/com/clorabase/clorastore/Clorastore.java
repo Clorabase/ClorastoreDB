@@ -9,7 +9,7 @@ import java.io.IOException;
  * This is the top-level class of the whole database. Every database operation
  * or any configuration change in it is performed using this class.
  * You can configure your database behaviour from here.
- * The database is located in the path returned by {@link Context#getDataDir()}.
+ * The database is located in the directory which you have provided while initializing the class
  *
  * @author Rahil khan
  * @since 2021
@@ -30,6 +30,8 @@ public class Clorastore {
     public static Clorastore getInstance(File dir,String name){
         if (instance == null)
             instance = new Clorastore();
+        if (!dir.isDirectory() || !dir.canWrite())
+            throw new ClorastoreException("The directory is a file or not writable",Reasons.DATABSE_DIRECTORY_NOT_WRITABLE);
 
         root = new File(dir,name);
         if (!root.exists() && !root.mkdir())

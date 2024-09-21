@@ -1,23 +1,16 @@
 package com.clorabase.clorastore;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 
 /**
  * This class represent a collection in the database. A collection is the collection of many documents.
@@ -55,6 +48,10 @@ public class Collection {
         }
     }
 
+    public void documentAsync(@NonNull String name, Consumer<Document> callback){
+        new Thread(() -> callback.accept(document(name))).start();
+    }
+
     /**
      * Returns collections present in the current collection.
      *
@@ -74,7 +71,7 @@ public class Collection {
      * Returns document names present in the current collection.
      * @return {@link List<String>}. May be empty, but never null
      */
-    public List<String> getDocuments() {
+    public @NonNull List<String> getDocuments() {
         String[] files = root.list(FileFilterUtils.suffixFileFilter(".doc"));
         if (files == null)
             return new ArrayList<>();
@@ -91,7 +88,7 @@ public class Collection {
      *
      * @return {@link String}
      */
-    public String getName() {
+    public @NonNull String getName() {
         return root.getName();
     }
 
@@ -109,7 +106,7 @@ public class Collection {
     /**
      * Constructs a query starting from this collection.
      */
-    public Query query(){
+    public @NonNull Query query(){
         return new Query(this);
     }
 }
