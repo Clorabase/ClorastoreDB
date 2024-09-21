@@ -4,9 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 
@@ -25,9 +23,10 @@ import java.util.concurrent.Executors;
 
 public class Document {
     protected final File document;
-    protected final Map<String, Object> data;
+    protected Map<String, Object> data;
     public static final int DOCUMENT_MAX_SIZE = 5*1024*1024;
     private final Executor executor = Executors.newSingleThreadExecutor();
+    private final Gson gson = new Gson();
 
     protected Document(File root) {
         this.document = root;
@@ -62,13 +61,14 @@ public class Document {
      * @param fields The data to store in the document
      * @throws ClorastoreException If fields contain a value that is not a valid datatype or if an IO error occurred.
      */
-    public void setData(@NonNull Map<String, ?> fields) {
-        fields.forEach((s, o) -> validateDatatype(o));
+    public void setData(@NonNull Map<String, Object> fields) {
+        fields.values().forEach(this::validateDatatype);
 
         if (document.length() > DOCUMENT_MAX_SIZE && document.delete())
             throw new ClorastoreException("Document size exceed 5 MB, it must be less then 5 MB.", Reasons.DOC_SIZE_EXCEED);
 
-        var json = new Gson().toJsonTree(fields).getAsJsonObject();
+        var json = gson.toJsonTree(fields).getAsJsonObject();
+        data = fields;
         executor.execute(() -> {
             try {
                 FileUtils.writeStringToFile(document, json.toString(), Charset.defaultCharset(), false);
@@ -92,7 +92,7 @@ public class Document {
                 return new HashMap<>();
 
             var type = new TypeToken<Map<String, Object>>(){}.getType();
-            return new Gson().fromJson(content,type);
+            return gson.fromJson(content,type);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
@@ -149,7 +149,7 @@ public class Document {
      * @throws ClassCastException If the object is not compatible with the class provided
      */
     public <T> T getAsObject(@NonNull Class<T> clazz) throws IOException, ClassCastException {
-        var gson = new Gson();
+        System.out.println(data);
         return gson.fromJson(gson.toJsonTree(data),clazz);
     }
 
@@ -160,8 +160,10 @@ public class Document {
      * @param object The POJO
      */
     public void setObject(@NonNull Object object) {
-        var json = new Gson().toJsonTree(object);
-        setData(json.getAsJsonObject().asMap());
+        var json = gson.toJsonTree(object);
+        var type = new TypeToken<Map<String, Object>>(){}.getType();
+        Map<String,Object> map =  gson.fromJson(json,type);
+        setData(map);
     }
 
 
@@ -186,7 +188,7 @@ public class Document {
     private void validateDatatype(Object value) {
         var isValid = value instanceof String || value instanceof Number || value instanceof Boolean || value instanceof List;
         if (!isValid)
-            throw new ClorastoreException("Datatype not supported. A document can only contain either a 'String' or a subclass of 'Number'", Reasons.ERROR_UNKNOWN);
+            throw new ClorastoreException("Datatype not supported. A document can only contain either a 'String','Boolean' or a subclass of 'Number'", Reasons.ERROR_UNKNOWN);
     }
 
     private void addValueByObject(JsonObject jsonObject, String propertyName, Object value) {
@@ -215,6 +217,6 @@ public class Document {
 
     @Override
     public String toString() {
-        return new Gson().toJson(data);
+        return gson.toJson(data);
     }
 }
